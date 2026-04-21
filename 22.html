@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>مركز صيانة دويدار | الرئيسية</title>
+    <!-- SwiperJS, Font Awesome, Google Fonts -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background: #0a0c10;
+            color: #eef2ff;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        :root {
+            --bg-dark: #0b0e14;
+            --card-bg: #11161f;
+            --neon-orange: #ff6b2c;
+            --electric-cyan: #00e0ff;
+            --gold-accent: #facc15;
+        }
+
+        /* preloader */
+        .preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #03050a;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            flex-direction: column;
+            gap: 20px;
+            transition: opacity 0.8s;
+        }
+        .preloader.hide { opacity: 0; visibility: hidden; }
+        .preloader-logo { width: 140px; animation: pulseGlow 1s infinite alternate; }
+        .preloader-logo img { width: 100%; border-radius: 40px; box-shadow: 0 0 20px #ff6b2c; }
+        .welcome-message { font-size: 1.8rem; font-weight: 800; background: linear-gradient(135deg, #ff6b2c, #00e0ff); -webkit-background-clip: text; background-clip: text; color: transparent; }
+        @keyframes pulseGlow {
+            0% { transform: scale(1); filter: drop-shadow(0 0 5px #ff6b2c);}
+            100% { transform: scale(1.05); filter: drop-shadow(0 0 20px #00e0ff);}
+        }
+
+        /* navbar */
+        .navbar {
+            background: rgba(8, 12, 18, 0.95);
+            backdrop-filter: blur(12px);
+            padding: 0.8rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255,107,44,0.5);
+        }
+        .nav-container {
+            max-width: 1300px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+        .nav-link {
+            background: transparent;
+            border: none;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #facc15;
+            padding: 0.5rem 1.6rem;
+            border-radius: 40px;
+            cursor: pointer;
+            transition: 0.2s;
+            font-family: 'Tajawal', sans-serif;
+        }
+        .nav-link:active { transform: scale(0.94); background: #ff6b2c; color: black; }
+        .nav-link:hover { background: #ff6b2c20; color: #ff6b2c; }
+
+        /* header logo */
+        .hero-header {
+            background: radial-gradient(circle at 20% 30%, #0f172a, #03050a);
+            padding: 1rem;
+            text-align: center;
+        }
+        .logo-main {
+            display: inline-flex;
+            align-items: center;
+            gap: 15px;
+            background: #00000066;
+            backdrop-filter: blur(8px);
+            padding: 6px 28px;
+            border-radius: 80px;
+            border: 1px solid #ff6b2c;
+        }
+        .logo-main img { width: 50px; border-radius: 50%; border: 2px solid #00e0ff; }
+        .logo-main span { font-size: 1.6rem; font-weight: 800; background: linear-gradient(135deg,#ff6b2c,#facc15); -webkit-background-clip: text; background-clip: text; color: transparent; }
+
+        /* floating contact */
+        .contact-float {
+            position: fixed;
+            bottom: 25px;
+            left: 20px;
+            z-index: 999;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .float-btn {
+            width: 55px; height: 55px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            background: #1e293b;
+            color: white;
+            font-size: 1.8rem;
+            transition: 0.3s;
+            text-decoration: none;
+            box-shadow: 0 5px 12px black;
+        }
+        .float-btn.whatsapp { background: #25D366; }
+        .float-btn.facebook { background: #1877f2; }
+        .float-btn.phone { background: #ff6b2c; }
+        .float-btn:hover { transform: scale(1.1); }
+
+        .container { max-width: 1300px; margin: 0 auto; padding: 2rem 1.5rem; }
+        .section-title {
+            font-size: 2rem;
+            font-weight: 800;
+            border-right: 6px solid #ff6b2c;
+            padding-right: 20px;
+            margin-bottom: 2rem;
+            color: #facc15;
+        }
+
+        /* about section */
+        .about-glow {
+            background: linear-gradient(145deg, #11161f, #0a0e16);
+            border-radius: 48px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border: 1px solid #ff6b2c40;
+        }
+        .about-glow p { font-size: 1.2rem; line-height: 1.8; color: #cfdee9; }
+
+        /* service carousel cards */
+        .swiper { padding: 20px 0 40px; }
+        .service-card {
+            background: #11161f;
+            border-radius: 32px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255,107,44,0.4);
+            box-shadow: 0 15px 30px -10px black;
+        }
+        .service-card:hover { transform: translateY(-8px); border-color: #ff6b2c; }
+        .service-card img { width: 100%; height: 240px; object-fit: cover; }
+        .service-title {
+            padding: 18px;
+            text-align: center;
+            font-weight: 800;
+            font-size: 1.3rem;
+            background: #0a0f17;
+            color: #00e0ff;
+        }
+        .swiper-button-next, .swiper-button-prev { color: #ff6b2c; background: #000000aa; border-radius: 50%; width: 45px; height: 45px; }
+        .swiper-pagination-bullet-active { background: #ff6b2c; }
+
+        /* testimonials */
+        .testi-card {
+            background: #0f141e;
+            padding: 2rem;
+            border-radius: 40px;
+            text-align: center;
+            border-bottom: 4px solid #ff6b2c;
+            box-shadow: 0 20px 30px -12px black;
+        }
+        .testi-card i { font-size: 3rem; color: #facc15; margin-bottom: 1rem; }
+        .testi-card p { font-size: 1.2rem; margin: 1rem 0; }
+        .client-name { font-weight: 800; color: #00e0ff; }
+
+        /* contact form */
+        .contact-form-section {
+            background: #11161f;
+            border-radius: 48px;
+            padding: 2rem;
+            border: 1px solid #ff6b2c;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 14px 20px;
+            border-radius: 60px;
+            background: #1e293b;
+            border: 1px solid #334155;
+            color: white;
+            font-family: 'Tajawal', sans-serif;
+        }
+        .btn-submit {
+            background: #ff6b2c;
+            width: 100%;
+            padding: 14px;
+            font-weight: bold;
+            border: none;
+            border-radius: 60px;
+            color: black;
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+        footer { background: #03050a; text-align: center; padding: 2rem; margin-top: 2rem; color: #94a3b8; }
+        @media (max-width: 768px) {
+            .nav-container { gap: 1rem; }
+            .section-title { font-size: 1.6rem; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Preloader -->
+<div class="preloader" id="preloader">
+    <div class="preloader-logo"><img src="https://i.ibb.co/3mb751Vm/518327551-620980447688697-5926234654151571707-n.jpg" alt="logo"></div>
+    <div class="welcome-message">مركز صيانة دويدار <i class="fas fa-motorcycle"></i><br>خبرة بلا منازع</div>
+</div>
+
+<!-- شريط التنقل الرئيسي - الآن يتضمن نبذة عن المركز -->
+<div class="navbar">
+    <div class="nav-container">
+        <button class="nav-link" data-section="homeSection">🏠 الرئيسية</button>
+        <button class="nav-link" data-section="aboutSection">📖 نبذة عن المركز</button>
+        <button class="nav-link" data-section="servicesCarousel">🛠️ الأقسام</button>
+        <button class="nav-link" data-section="testimonialsSection">⭐ آراء العملاء</button>
+    </div>
+</div>
+
+<div class="hero-header">
+    <div class="logo-main">
+        <img src="https://i.ibb.co/3mb751Vm/518327551-620980447688697-5926234654151571707-n.jpg" alt="logo">
+        <span>مركز دويدار المتطور</span>
+    </div>
+</div>
+
+<div class="contact-float">
+    <a href="https://wa.me/201274162072" target="_blank" class="float-btn whatsapp"><i class="fab fa-whatsapp"></i></a>
+    <a href="https://www.facebook.com/profile.php?id=100093302421761" target="_blank" class="float-btn facebook"><i class="fab fa-facebook-f"></i></a>
+    <a href="tel:01274162072" class="float-btn phone"><i class="fas fa-phone-alt"></i></a>
+</div>
+
+<main>
+    <!-- القسم الرئيسي (ترحيب) -->
+    <div id="homeSection" class="container">
+        <div class="about-glow" data-aos="fade-up">
+            <div class="section-title"><i class="fas fa-motorcycle"></i> أهلاً بك في مركز دويدار</div>
+            <p>مركز صيانة دويدار هو الوجهة الأمثل لصيانة الموتوسيكلات والتروسكلات في طنطا ومحافظة الغربية. نتميز بالخبرة العالية والتقنيات الحديثة وأسعار تنافسية. فريقنا بقيادة المهندس عنتر دويدار يضمن لك خدمات احترافية في جميع الأقسام. اضغط على أيقونة الأقسام واكتشف العناية المثالية لدراجتك.</p>
+        </div>
+    </div>
+
+    <!-- قسم نبذة عن المركز (منفصل كما طلبت) -->
+    <div id="aboutSection" class="container">
+        <div class="about-glow" style="border-right: 8px solid #ff6b2c;">
+            <div class="section-title"><i class="fas fa-building"></i> نبذة عن مركز صيانة دويدار</div>
+            <p><strong>مركز دويدار لصيانة الموتوسيكلات:</strong> تأسس على يد المهندس عنتر دويدار، خبير الصيانة المعتمد، ليقدم خدمة متكاملة للموتوسيكلات الصينية واليابانية والتروسكلات. نمتلك أحدث أجهزة التشخيص الإلكتروني، ورشة مجهزة، وفريق مدرب على أعلى مستوى. نقدم حلولاً سريعة لأعطال المحرك، الكهرباء، الفرامل، ونظام التعليق. نسعى لأن نكون الخيار الأول في الغربية من خلال الجودة والشفافية. المركز يقدم ضماناً على جميع الإصلاحات وخدمة عملاء على مدار الساعة. ثقتكم تهمنا، ونعدكم بأفضل خدمة صيانة في مصر.</p>
+            <p style="margin-top: 1rem;"><i class="fas fa-map-marker-alt"></i> موقعنا: طنطا - شارع الجيش - بجوار موقف السعيد | <i class="fas fa-clock"></i> نعمل يومياً من 10 صباحاً حتى 11 مساءً.</p>
+        </div>
+    </div>
+
+    <!-- قسم الخدمات (كاروسيل الأقسام) كل قسم يفتح لاندج بيج منفصلة (صفحة HTML كاملة) -->
+    <div id="servicesCarousel" class="container">
+        <div class="section-title"><i class="fas fa-cogs"></i> خدماتنا المتخصصة | اضغط على القسم لقراءة المقال الكامل (لاندج بيج)</div>
+        <div class="swiper serviceSwiper">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide">
+                    <div class="service-card" data-article-page="index.html">
+                        <img src="https://i.ibb.co/Vck9nnwk/460A1374.jpg" alt="صيانة كاملة">
+                        <div class="service-title">🔧 الصيانة الكاملة للدراجة</div>
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="service-card" data-article-page="engine-page.html">
+                        <img src="https://i.ibb.co/FkTC0m5p/460A1375.jpg" alt="صيانة الماتور">
+                        <div class="service-title">⚙️ صيانة المحرك (الماتور)</div>
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="service-card" data-article-page="simple-fixes-page.html">
+                        <img src="https://i.ibb.co/pDvTxrY/460A1376.jpg" alt="اعطال بسيطة">
+                        <div class="service-title">🔩 الأعطال الفنية البسيطة</div>
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="service-card" data-article-page="electrical-page.html">
+                        <img src="https://i.ibb.co/7NZ7qLXL/460A1377.jpg" alt="اعطال كهربائية">
+                        <div class="service-title">⚡ الأعطال الكهربائية</div>
+                    </div>
+                </div>
+            </div>
+            <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-pagination"></div>
+        </div>
+    </div>
+
+    <!-- آراء العملاء (كروسيل محترف) -->
+    <div id="testimonialsSection" class="container">
+        <div class="section-title"><i class="fas fa-star-of-life"></i> آراء عملائنا المميزين</div>
+        <div class="swiper testimonialSwiper">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide"><div class="testi-card"><i class="fas fa-crown"></i><p>⭐ أفضل مركز صيانة في الغربية! تعامل راقي وخبرة حقيقية. أنصح الجميع بالتعامل معهم.</p><div class="client-name">أحمد ربيع</div></div></div>
+                <div class="swiper-slide"><div class="testi-card"><i class="fas fa-handshake"></i><p>معاملة مميزة جداً، سرعة في الإنجاز وقطع أصلية. شكراً لمهندس عنتر وفريقه.</p><div class="client-name">محمد صلاح</div></div></div>
+                <div class="swiper-slide"><div class="testi-card"><i class="fas fa-wrench"></i><p>طقم كامل مميز، كل الخدمات تحت سقف واحد. من أفضل القرارات أني تعاملت مع دويدار.</p><div class="client-name">كريم الدسوقي</div></div></div>
+                <div class="swiper-slide"><div class="testi-card"><i class="fas fa-thumbs-up"></i><p>احترافية في صيانة الموتوسيكلات الصينية، أنقذوا دراجتي. شكراً لمركز دويدار.</p><div class="client-name">محمود عبدالله</div></div></div>
+            </div>
+            <div class="swiper-pagination"></div>
+        </div>
+    </div>
+
+    <!-- نموذج التواصل + ارسال واتساب -->
+    <div class="container">
+        <div class="section-title"><i class="fas fa-comment-dots"></i> تواصل معنا وأرسل بياناتك</div>
+        <div class="contact-form-section">
+            <form id="contactForm">
+                <div class="form-group"><label>الاسم الكامل</label><input type="text" id="fullName" placeholder="أدخل اسمك" required></div>
+                <div class="form-group"><label>العنوان</label><input type="text" id="address" placeholder="المدينة/الشارع" required></div>
+                <div class="form-group"><label>رقم التليفون</label><input type="tel" id="phone" placeholder="01274162072" required></div>
+                <button type="submit" class="btn-submit"><i class="fab fa-whatsapp"></i> إرسال البيانات عبر واتساب</button>
+            </form>
+        </div>
+    </div>
+</main>
+
+<footer>
+    <p>© 2025 مركز صيانة دويدار - أفضل مركز صيانة موتوسيكلات في طنطا والغربية | اتصل: 01274162072</p>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+    AOS.init({ duration: 700, once: true });
+    // preloader
+    window.addEventListener('load', () => {
+        setTimeout(() => {
+            document.getElementById('preloader').classList.add('hide');
+            setTimeout(() => { document.getElementById('preloader').style.display = 'none'; }, 800);
+        }, 2000);
+    });
+
+    // carousel for services
+    const serviceSwiper = new Swiper('.serviceSwiper', {
+        loop: true, autoplay: { delay: 4000, disableOnInteraction: false }, speed: 700,
+        slidesPerView: 1, spaceBetween: 20,
+        pagination: { el: '.swiper-pagination', clickable: true },
+        navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },
+        breakpoints: { 640: { slidesPerView: 1 }, 768: { slidesPerView: 2 }, 1024: { slidesPerView: 3 } }
+    });
+    // testimonials carousel
+    const testSwiper = new Swiper('.testimonialSwiper', {
+        loop: true, autoplay: { delay: 3500 }, slidesPerView: 1, spaceBetween: 20,
+        pagination: { el: '.swiper-pagination', clickable: true },
+        breakpoints: { 768: { slidesPerView: 2 }, 1024: { slidesPerView: 3 } }
+    });
+
+    // فتح صفحة لاندج بيج كاملة (كل قسم يفتح صفحة HTML منفصلة)
+    document.querySelectorAll('.service-card').forEach(card => {
+        card.addEventListener('click', (e) => {
+            const pageUrl = card.getAttribute('data-article-page');
+            if(pageUrl) {
+                window.open(pageUrl, '_blank'); // فتح في تبويب جديد (صفحة مستقلة)
+            } else {
+                alert("سيتم إضافة الصفحة قريباً");
+            }
+        });
+    });
+
+    // smooth scroll nav buttons
+    const navButtons = document.querySelectorAll('.nav-link');
+    navButtons.forEach(btn => {
+        btn.addEventListener('click', function() {
+            const targetId = this.getAttribute('data-section');
+            const targetEl = document.getElementById(targetId);
+            if(targetEl) targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+    });
+
+    // whatsapp form
+    const form = document.getElementById('contactForm');
+    const waNumber = "201274162072";
+    form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const name = document.getElementById('fullName').value.trim();
+        const address = document.getElementById('address').value.trim();
+        const phone = document.getElementById('phone').value.trim();
+        if(!name || !address || !phone) { alert("جميع الحقول مطلوبة"); return; }
+        const msg = `📢 *بيانات عميل جديد من موقع دويدار* %0A👤 الاسم: ${name}%0A📍 العنوان: ${address}%0A📞 الهاتف: ${phone}%0A🛵 يرغب في خدمة صيانة`;
+        window.open(`https://wa.me/${waNumber}?text=${msg}`, '_blank');
+        form.reset();
+    });
+</script>
+
+<!-- ========== إنشاء صفحات لاندج بيج منفصلة لكل قسم (سيتم إنشاؤها عبر JavaScript لتكون صفحات كاملة مع 4 صور لكل منها) ========== -->
+<script>
+    // دالة إنشاء صفحات HTML منفصلة بشكل ديناميكي مع محتوى و 4 صور لكل قسم
+    // سيتم إنشاء 4 صفحات: complete-page.html , engine-page.html , simple-fixes-page.html , electrical-page.html
+    // نستخدم Blob و URLs لإنشاء الملفات وفتحها أو تحميلها لضمان وجود الصفحات، ولكن يمكن أيضاً كتابة كود HTML كامل
+    // لتوفير تجربة كاملة، سنقوم بإنشاء صفحات وفتحها في نافذة جديدة (سيتم تخزينها مؤقتاً)
+    // لكن لضمان عملها بشكل صحيح وعرضها للمستخدم، سنقوم بفتح صفحة جديدة تحتوي على المحتوى باستخدام window.open وكتابة document.write
+    // لأن المستخدم يريد "لاندج بيدج كامله ب صفحه خاصه لوحدها مع 4 صور"
+    function createLandingPage(title, contentHTML, imageUrlsArray) {
+        const pageContent = `<!DOCTYPE html>
+        <html dir="rtl" lang="ar">
+        <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>${title} | مركز دويدار</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+        <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+        <style>
+            body { font-family: 'Tajawal', sans-serif; background: #0a0c10; color: #eef2ff; margin:0; padding:2rem; direction:rtl; }
+            .landing-container { max-width: 1100px; margin: 0 auto; background: #11161f; border-radius: 48px; padding: 2rem; border:1px solid #ff6b2c; }
+            h1 { color: #facc15; border-right: 6px solid #ff6b2c; padding-right: 20px; margin-bottom: 1.5rem; }
+            .images-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px,1fr)); gap: 1.5rem; margin: 2rem 0; }
+            .img-card { background: #0f172a; border-radius: 28px; overflow: hidden; border: 1px solid #ff6b2c40; }
+            .img-card img { width: 100%; height: 200px; object-fit: cover; }
+            .img-card p { padding: 10px; text-align: center; background: #00000055; color:#00e0ff; font-weight: bold; margin:0; }
+            .back-btn { background: #ff6b2c; border: none; padding: 12px 28px; border-radius: 40px; color: black; font-weight: bold; cursor: pointer; margin-top: 2rem; display: inline-block; text-decoration: none; }
+            p { line-height: 1.7; }
+            .contact-wa { margin-top: 2rem; background:#25D36620; padding:1rem; border-radius: 28px; text-align:center; }
+            @media (max-width:700px){ body{padding:1rem;} }
+        </style>
+        </head>
+        <body>
+        <div class="landing-container">
+            <h1><i class="fas fa-tools"></i> ${title}</h1>
+            <div>${contentHTML}</div>
+            <div class="images-grid">
+                ${imageUrlsArray.map((img,idx) => `<div class="img-card"><img src="${img.url}" alt="مشكلة ${idx+1}"><p>⚠️ ${img.caption}</p></div>`).join('')}
+            </div>
+            <div class="contact-wa">
+                <i class="fab fa-whatsapp"></i> للاستفسار المباشر: <a href="https://wa.me/201274162072" target="_blank" style="color:#ff6b2c;">اضغط هنا للتواصل واتساب</a><br>
+                <a href="javascript:window.close()" class="back-btn"><i class="fas fa-arrow-right"></i> العودة إلى الموقع الرئيسي</a>
+            </div>
+        </div>
+        </body></html>`;
+        return pageContent;
+    }
+
+    // بيانات الصور لكل قسم (4 صور لكل قسم مع وصف المشكلة)
+    const pagesData = {
+        'complete-page.html': {
+            title: '🔧 الصيانة الكاملة للدراجة النارية',
+            content: '<p><strong>الصيانة الكاملة</strong> تشمل فحص جميع أنظمة الدراجة: المحرك، القابض، الفرامل، العجلات، الكهرباء، والتبريد. في مركز دويدار نقدم باقة شاملة تضمن سلامة دراجتك وتجنب الأعطال المفاجئة. الصيانة الدورية تطيل عمر المحرك وتحسن الأداء.</p><p>نوصي بعمل صيانة كاملة كل 2000 كم أو قبل الرحلات الطويلة. فريقنا يستخدم أحدث الأجهزة لتشخيص أي خلل بدقة.</p>',
+            images: [
+                { url: "https://i.ibb.co/Vck9nnwk/460A1374.jpg", caption: "مشكلة تآكل تروس القير" },
+                { url: "https://i.ibb.co/FkTC0m5p/460A1375.jpg", caption: "تسريب زيت المحرك" },
+                { url: "https://i.ibb.co/pDvTxrY/460A1376.jpg", caption: "ضعف فرامل الدراجة" },
+                { url: "https://i.ibb.co/7NZ7qLXL/460A1377.jpg", caption: "اهتزاز في العجلات" }
+            ]
+        },
+        'engine-page.html': {
+            title: '⚙️ صيانة المحرك (الماتور) وأعطاله',
+            content: '<p><strong>مشاكل الماتور الشائعة:</strong> ارتفاع الحرارة، نقص الضغط، تلف الكباس، و ضعف الزيت. نؤكد على أهمية تغيير الزيت كل 1000 كم واستخدام بنزين 90 أوكتين للمحركات 150 و200 سي سي. البنزين الجيد يحافظ على البخاخات ويطيل عمر المحرك. نقدم فحص كمبيوتر شامل وإصلاح متكامل للمحرك.</p><p>تجاهل الأعطال يؤدي إلى تكاليف باهظة، لذا احرص على الصيانة الوقائية.</p>',
+            images: [
+                { url: "https://i.ibb.co/xKCK6MdW/460A1379.jpg", caption: "تلف بستم الموتور" },
+                { url: "https://i.ibb.co/0jGMWGjz/460A1380.jpg", caption: "صوت طرق في الماتور" },
+                { url: "https://i.ibb.co/SDkHhwjS/460A1381.jpg", caption: "تسرب زيت من جوان المحرك" },
+                { url: "https://i.ibb.co/Vck9nnwk/460A1374.jpg", caption: "ارتفاع حرارة المحرك" }
+            ]
+        },
+        'simple-fixes-page.html': {
+            title: '🔩 الأعطال الفنية البسيطة وحلولها',
+            content: '<p>5 خطوات لحل الأعطال البسيطة: 1- فحص البوجي وتنظيفه. 2- تنظيف فلتر الهواء. 3- ضبط سير الدينمو. 4- تشحيم السلسلة. 5- التأكد من مستويات الزيت. هذه المشاكل الشائعة يمكن حلها بسرعة، لكن إذا استمر العطل، فريق دويدار جاهز لخدمتك.</p>',
+            images: [
+                { url: "https://i.ibb.co/7NZ7qLXL/460A1377.jpg", caption: "بوجي متسخ – ضعف التشغيل" },
+                { url: "https://i.ibb.co/pDvTxrY/460A1376.jpg", caption: "فلتر هواء مسدود – ضعف الأداء" },
+                { url: "https://i.ibb.co/FkTC0m5p/460A1375.jpg", caption: "سلسلة جافة – صوت واهتزاز" },
+                { url: "https://i.ibb.co/0jGMWGjz/460A1380.jpg", caption: "مستوى زيت منخفض – خطر احتكاك" }
+            ]
+        },
+        'electrical-page.html': {
+            title: '⚡ تشخيص وإصلاح الأعطال الكهربائية',
+            content: '<p>أعطال الكهرباء تشمل ضعف الإضاءة، عدم شحن البطارية، تلف الدينمو، ومشاكل الكويل. في مركز دويدار نستخدم أجهزة فحص متخصصة لتحديد العطل بدقة. نقدم صيانة شاملة للوحة الكهرباء، الأسلاك، ومرحلات التشغيل. الكهرباء السليمة تعني أماناً وثباتاً للدراجة.</p>',
+            images: [
+                { url: "https://i.ibb.co/SDkHhwjS/460A1381.jpg", caption: "بطارية تالفة – ضعف بدء الحركة" },
+                { url: "https://i.ibb.co/xKCK6MdW/460A1379.jpg", caption: "دينمو لا يشحن" },
+                { url: "https://i.ibb.co/3mb751Vm/518327551-620980447688697-5926234654151571707-n.jpg", caption: "فيوز منصهر – انقطاع كهرباء كامل" },
+                { url: "https://i.ibb.co/Vck9nnwk/460A1374.jpg", caption: "تلف كويل الإشعال" }
+            ]
+        }
+    };
+
+    // دالة لإنشاء الصفحات وحفظها مؤقتاً وفتحها عند الضغط على البطاقات
+    // نعيد تعريف حدث الضغط لفتح الصفحات التي تم إنشاؤها ديناميكياً مع صورها
+    setTimeout(() => {
+        // تعديل الروابط لتستخدم إنشاء صفحات حقيقية مع بيانات 4 صور
+        const cards = document.querySelectorAll('.service-card');
+        cards.forEach(card => {
+            const originalPage = card.getAttribute('data-article-page');
+            if(originalPage && pagesData[originalPage]) {
+                const data = pagesData[originalPage];
+                // إعادة تعريف حدث الضغط لفتح نافذة جديدة تحتوي على الـ landing page الكاملة
+                card.removeEventListener('click', () => {});
+                card.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const fullHtml = createLandingPage(data.title, data.content, data.images);
+                    const win = window.open();
+                    win.document.write(fullHtml);
+                    win.document.close();
+                });
+            }
+        });
+    }, 500);
+</script>
+</body>
+</html>
